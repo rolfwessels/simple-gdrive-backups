@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+.aws/*
+
+
+# Local
+src/**/*.plan
+src/**/bin/
+src/**/obj/
+src/.vs/
+docker-compose.yml
+
