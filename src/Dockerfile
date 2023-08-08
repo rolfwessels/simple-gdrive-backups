@@ -13,6 +13,16 @@ VOLUME [ "/data/backup" ]
 
 
 RUN apk update && apk add --no-cache zip curl
+
+RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && \
+    unzip rclone-current-linux-amd64.zip && \
+    cd rclone-*-linux-amd64 && \
+    cp rclone /usr/bin/ && \
+    chown root:root /usr/bin/rclone && \
+    chmod 755 /usr/bin/rclone && \
+    rm -rf /app/rclone-*
+
+
 COPY backup-runner.sh /backup-runner.sh
 COPY start.sh /start.sh
 RUN chmod +x /backup-runner.sh

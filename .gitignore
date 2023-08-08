@@ -10,3 +10,5 @@ src/**/obj/
 src/.vs/
 docker-compose.yml
 
+src/.rclone-config/rclone.conf
+var/backup

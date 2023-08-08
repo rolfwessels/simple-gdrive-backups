@@ -7,7 +7,8 @@ NC='\033[0m' # No Color
 # Configuration variables
 BACKUP_SOURCE_FOLDER="${BACKUP_SOURCE_FOLDER:-/data/source}"
 BACKUP_FOLDER=${BACKUP_FOLDER:-/data/backup}
-ZIP_NAME=${ZIP_NAME_FORMAT:-backup}
+ZIP_NAME=${ZIP_NAME:-backup}
+BACKUP_REMOTE_FOLDER=${BACKUP_REMOTE_FOLDER:-/data/backup/$ZIP_NAME}
 MAX_BACKUPS=${MAX_BACKUPS:-7}
 
 # Create the backup directory if it doesn't exist
@@ -26,5 +27,12 @@ echo Remove files older than $MAX_BACKUPS days
 
 find "$BACKUP_FOLDER/$ZIP_NAME"* -mtime +$MAX_BACKUPS
 find "$BACKUP_FOLDER/$ZIP_NAME"* -mtime +$MAX_BACKUPS -exec rm {} \;
+
+if [ -n "$RCLONE_REMOTE_NAME" ]; then
+  echo "Remote name found: $RCLONE_REMOTE_NAME $BACKUP_REMOTE_FOLDER"
+  rclone sync "$BACKUP_FOLDER" "$RCLONE_REMOTE_NAME:/data/backup/"
+  echo "Backup synced to remote: $RCLONE_REMOTE_NAME"
+fi
+
 echo Done
 
