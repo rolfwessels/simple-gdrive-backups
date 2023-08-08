@@ -93,7 +93,7 @@ build:
 
 start: docker-check
 	@printf  "Starting ${GREEN}$(project)${NC}\n"
-	@cd src/simple-gdrive-backups.Api && dotnet run
+	@sh src/backup-runner.sh
 
 docker-check:
 	$(call assert-file-exists,$(docker-filecheck), This step should only be run from Docker. Please run `make up` first.)
